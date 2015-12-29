@@ -29,7 +29,7 @@ void Copter::init_rc_in()
     channel_yaw      = RC_Channel::rc_channel(rcmap.yaw()-1);
 
     //channel 7
-    channel_climb = RC_Channel::rc_channel(7-1);
+    channel_thrust = RC_Channel::rc_channel(7-1);
     //channel 8
 	channel_strafe = RC_Channel::rc_channel(8-1);
 
@@ -39,7 +39,7 @@ void Copter::init_rc_in()
     channel_yaw->set_angle(4500);
     channel_throttle->set_range(g.throttle_min, THR_MAX);
 
-    channel_climb->set_range(g.throttle_min, THR_MAX);
+    channel_thrust->set_range(g.throttle_min, THR_MAX);
     channel_strafe->set_range(g.throttle_min, THR_MAX);
 
     channel_roll->set_type(RC_CHANNEL_TYPE_ANGLE_RAW);
@@ -77,7 +77,7 @@ void Copter::init_rc_out()
 
     // we want the input to be scaled correctly
     channel_throttle->set_range_out(0,1000);
-    channel_climb->set_range_out(0,1000);
+    channel_thrust->set_range_out(0,1000);
     channel_strafe->set_range_out(0,1000);
 
     // check if we should enter esc calibration mode

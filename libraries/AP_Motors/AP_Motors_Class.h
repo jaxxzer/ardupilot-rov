@@ -64,6 +64,9 @@ public:
     void                set_pitch(int16_t pitch_in) { _pitch_control_input = pitch_in; };               // range -4500 ~ 4500
     void                set_yaw(int16_t yaw_in) { _yaw_control_input = yaw_in; };                       // range -4500 ~ 4500
     void                set_throttle(float throttle_in) { _throttle_in = constrain_float(throttle_in,-100.0f,1100.0f); };   // range 0 ~ 1000
+    void                set_thrust(float thrust_in) { _thrust_in = constrain_float(thrust_in,-100.0f,1100.0f); };   // range 0 ~ 1000
+    void                set_strafe(float strafe_in) { _strafe_in = constrain_float(strafe_in,-100.0f,1100.0f); };   // range 0 ~ 1000
+
     void                set_stabilizing(bool stabilizing) { _flags.stabilizing = stabilizing; }
 
     // accessors for roll, pitch, yaw and throttle inputs to motors
@@ -153,6 +156,8 @@ protected:
     int16_t             _throttle_radio_min;        // minimum radio channel pwm
     int16_t             _throttle_radio_max;        // maximum radio channel pwm
     float               _throttle_in;               // last throttle input from set_throttle caller
+    float               _thrust_in;                 // last thrust input from set_thrust caller
+    float               _strafe_in;                 // last strafe input from set_strafe caller
     LowPassFilterFloat  _throttle_filter;           // throttle input filter
 
     // battery voltage, current and air pressure compensation variables

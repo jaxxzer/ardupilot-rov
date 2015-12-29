@@ -622,16 +622,6 @@ void AC_AttitudeControl::set_throttle_out(float throttle_in, bool apply_angle_bo
     }
 }
 
-void AC_AttitudeControl::set_thrust_out(float thrust_in)
-{
-	_motors.set_thrust(thrust_in);
-}
-
-void AC_AttitudeControl::set_strafe_out(float strafe_in)
-{
-	_motors.set_strafe(strafe_in);
-}
-
 void AC_AttitudeControl::set_throttle_out_unstabilized(float throttle_in, bool reset_attitude_control, float filter_cutoff)
 {
     _throttle_in_filt.apply(throttle_in, _dt);
