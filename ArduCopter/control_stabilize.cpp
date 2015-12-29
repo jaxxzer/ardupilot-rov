@@ -48,6 +48,7 @@ void Copter::stabilize_run()
     target_yaw_rate = get_pilot_desired_yaw_rate(channel_yaw->control_in);
 
     // get pilot's desired throttle
+    //converts throttle pwm in to a range 0-1000
     pilot_throttle_scaled = get_pilot_desired_throttle(channel_throttle->control_in);
 
     // call attitude controller

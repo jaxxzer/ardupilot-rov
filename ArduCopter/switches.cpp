@@ -8,8 +8,8 @@
 static union {
     struct {
         uint8_t CH6_flag            : 2; // 0, 1    // ch6 aux switch : 0 is low or false, 1 is center or true, 2 is high
-        uint8_t CH7_flag            : 2; // 2, 3    // ch7 aux switch : 0 is low or false, 1 is center or true, 2 is high
-        uint8_t CH8_flag            : 2; // 4, 5    // ch8 aux switch : 0 is low or false, 1 is center or true, 2 is high
+        //uint8_t CH7_flag            : 2; // 2, 3    // ch7 aux switch : 0 is low or false, 1 is center or true, 2 is high
+        //uint8_t CH8_flag            : 2; // 4, 5    // ch8 aux switch : 0 is low or false, 1 is center or true, 2 is high
         uint8_t CH9_flag            : 2; // 6, 7    // ch9 aux switch : 0 is low or false, 1 is center or true, 2 is high
         uint8_t CH10_flag           : 2; // 8, 9    // ch10 aux switch : 0 is low or false, 1 is center or true, 2 is high
         uint8_t CH11_flag           : 2; // 10,11   // ch11 aux switch : 0 is low or false, 1 is center or true, 2 is high
@@ -198,8 +198,8 @@ void Copter::read_aux_switches()
 void Copter::init_aux_switches()
 {
     // set the CH7 ~ CH12 flags
-    aux_con.CH7_flag = read_3pos_switch(g.rc_7.radio_in);
-    aux_con.CH8_flag = read_3pos_switch(g.rc_8.radio_in);
+    //aux_con.CH7_flag = read_3pos_switch(g.rc_7.radio_in);
+    //aux_con.CH8_flag = read_3pos_switch(g.rc_8.radio_in);
     aux_con.CH10_flag = read_3pos_switch(g.rc_10.radio_in);
     aux_con.CH11_flag = read_3pos_switch(g.rc_11.radio_in);
 

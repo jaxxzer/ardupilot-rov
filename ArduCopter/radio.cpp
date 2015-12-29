@@ -28,11 +28,19 @@ void Copter::init_rc_in()
     channel_throttle = RC_Channel::rc_channel(rcmap.throttle()-1);
     channel_yaw      = RC_Channel::rc_channel(rcmap.yaw()-1);
 
+    //channel 7
+    channel_climb = RC_Channel::rc_channel(7-1);
+    //channel 8
+	channel_strafe = RC_Channel::rc_channel(8-1);
+
     // set rc channel ranges
     channel_roll->set_angle(ROLL_PITCH_INPUT_MAX);
     channel_pitch->set_angle(ROLL_PITCH_INPUT_MAX);
     channel_yaw->set_angle(4500);
     channel_throttle->set_range(g.throttle_min, THR_MAX);
+
+    channel_climb->set_range(g.throttle_min, THR_MAX);
+    channel_strafe->set_range(g.throttle_min, THR_MAX);
 
     channel_roll->set_type(RC_CHANNEL_TYPE_ANGLE_RAW);
     channel_pitch->set_type(RC_CHANNEL_TYPE_ANGLE_RAW);
@@ -41,8 +49,8 @@ void Copter::init_rc_in()
     //set auxiliary servo ranges
     g.rc_5.set_range(0,1000);
     g.rc_6.set_range(0,1000);
-    g.rc_7.set_range(0,1000);
-    g.rc_8.set_range(0,1000);
+    //g.rc_7.set_range(0,1000);
+    //g.rc_8.set_range(0,1000);
 
     // set default dead zones
     default_dead_zones();
@@ -69,6 +77,8 @@ void Copter::init_rc_out()
 
     // we want the input to be scaled correctly
     channel_throttle->set_range_out(0,1000);
+    channel_climb->set_range_out(0,1000);
+    channel_strafe->set_range_out(0,1000);
 
     // check if we should enter esc calibration mode
     esc_calibration_startup_check();

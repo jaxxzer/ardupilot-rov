@@ -35,6 +35,14 @@ void Copter::acro_run()
         }
         return;
     }
+    /*
+    channel_roll->control_in;
+    channel_pitch->control_in;
+    channel_yaw->control_in;
+    channel_throttle->control_in;
+    channel_thrust->control_in;
+    channel_strafe->control_in;
+    */
 
     // convert the input to the desired body frame rate
     get_pilot_desired_angle_rates(channel_roll->control_in, channel_pitch->control_in, channel_yaw->control_in, target_roll, target_pitch, target_yaw);
