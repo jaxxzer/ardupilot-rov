@@ -37,6 +37,9 @@ static void acro_run()
 
     // output pilot's throttle without angle boost
     attitude_control.set_throttle_out(pilot_throttle_scaled, false);
+
+    motors.set_thrust(g.rc_7.control_in);
+	motors.set_strafe(g.rc_8.control_in);
 }
 
 

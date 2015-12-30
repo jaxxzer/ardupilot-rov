@@ -360,6 +360,13 @@ RC_Channel::norm_input()
 }
 
 /*
+    //Add pilot inputs
+    motor_out[0] += throttle_radio_output;
+	motor_out[1] += throttle_radio_output;
+	motor_out[2] += thrust_radio_output;
+	motor_out[3] += thrust_radio_output;
+	motor_out[4] += throttle_radio_output;
+	motor_out[6] += strafe_radio_output;
   get percentage input from 0 to 100. This ignores the trim value.
  */
 uint8_t

@@ -16,25 +16,30 @@ static void default_dead_zones()
     g.rc_4.set_default_dead_zone(40);
 #endif
     g.rc_6.set_default_dead_zone(0);
+    g.rc_7.set_default_dead_zone(30);
+    g.rc_8.set_default_dead_zone(30);
 }
 
 static void init_rc_in()
 {
     // set rc channel ranges
-    g.rc_1.set_angle(ROLL_PITCH_INPUT_MAX);
-    g.rc_2.set_angle(ROLL_PITCH_INPUT_MAX);
-    g.rc_3.set_range(g.throttle_min, g.throttle_max);
-    g.rc_4.set_angle(4500);
+    g.rc_1.set_angle(ROLL_PITCH_INPUT_MAX);//pitch
+    g.rc_2.set_angle(ROLL_PITCH_INPUT_MAX);//roll
+    g.rc_3.set_range(g.throttle_min, g.throttle_max);//throttle
+    g.rc_7.set_range(1100,1900);//thrust
+    g.rc_8.set_range(1100,1900);//strafe
+    g.rc_4.set_angle(4500);//yaw
 
     g.rc_1.set_type(RC_CHANNEL_TYPE_ANGLE_RAW);
     g.rc_2.set_type(RC_CHANNEL_TYPE_ANGLE_RAW);
     g.rc_4.set_type(RC_CHANNEL_TYPE_ANGLE_RAW);
 
+
     //set auxiliary servo ranges
     g.rc_5.set_range(0,1000);
     g.rc_6.set_range(0,1000);
-    g.rc_7.set_range(0,1000);
-    g.rc_8.set_range(0,1000);
+    //g.rc_7.set_range(0,1000);
+    //g.rc_8.set_range(0,1000);
 
     // set default dead zones
     default_dead_zones();
@@ -58,6 +63,9 @@ static void init_rc_out()
 
     // we want the input to be scaled correctly
     g.rc_3.set_range_out(0,1000);
+
+    g.rc_7.set_range_out(1100,1900);
+    g.rc_8.set_range_out(1100,1900);
 
     // full throttle means to enter ESC calibration
     if(g.rc_3.control_in >= (g.throttle_max - 50) || (g.esc_calibrate == 2)) {

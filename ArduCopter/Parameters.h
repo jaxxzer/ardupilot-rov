@@ -94,7 +94,9 @@ public:
         k_param_pilot_velocity_z_max,
         k_param_circle_rate,                // deprecated - remove
         k_param_sonar_gain,
+		//////////////////////////////////////////////////
         k_param_ch8_option,
+		////////////////////////////////////////////////////////////////////////
         k_param_arming_check,
         k_param_sprayer,
         k_param_angle_max,
@@ -196,6 +198,7 @@ public:
         k_param_frame_orientation,
         k_param_optflow_enabled,
         k_param_fs_batt_voltage,
+		//////////////////////////////////////////
         k_param_ch7_option,
         k_param_auto_slew_rate,     // deprecated - can be deleted
         k_param_sonar_type_old,     // deprecated
@@ -389,8 +392,10 @@ public:
     AP_Int16        radio_tuning_high;
     AP_Int16        radio_tuning_low;
     AP_Int8         frame_orientation;
+    //////////////////////////////////////////////////
     AP_Int8         ch7_option;
     AP_Int8         ch8_option;
+    //////////////////////////////////////////////////
     AP_Int8         arming_check;
 
     AP_Int8         land_repositioning;
@@ -420,8 +425,8 @@ public:
     RC_Channel              rc_4;
     RC_Channel_aux          rc_5;
     RC_Channel_aux          rc_6;
-    RC_Channel_aux          rc_7;
-    RC_Channel_aux          rc_8;
+    RC_Channel          rc_7;
+    RC_Channel          rc_8;
 #if CONFIG_HAL_BOARD == HAL_BOARD_PX4 || CONFIG_HAL_BOARD == HAL_BOARD_VRBRAIN
     RC_Channel_aux          rc_9;
 #endif

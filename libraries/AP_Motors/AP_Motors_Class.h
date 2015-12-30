@@ -108,6 +108,8 @@ public:
     void                set_pitch(int16_t pitch_in) { _rc_pitch.servo_out = pitch_in; };                // range -4500 ~ 4500
     void                set_yaw(int16_t yaw_in) { _rc_yaw.servo_out = yaw_in; };                        // range -4500 ~ 4500
     void                set_throttle(int16_t throttle_in) { _rc_throttle.servo_out = throttle_in; };    // range 0 ~ 1000
+    void				set_thrust(int16_t thrust_in) { _rc_thrust.servo_out = thrust_in; };		// range 1100 ~ 1900
+    void				set_strafe(int16_t strafe_in) { _rc_strafe.servo_out = strafe_in; };		// range 1100 ~ 1900
 
     // get_throttle_out - returns throttle sent to motors in the range 0 ~ 1000
     int16_t             get_throttle_out() const { return _rc_throttle.servo_out; }
@@ -184,6 +186,8 @@ protected:
     RC_Channel&         _rc_pitch;              // pitch input in from users is held in servo_out
     RC_Channel&         _rc_throttle;           // throttle input in from users is held in servo_out
     RC_Channel&         _rc_yaw;                // yaw input in from users is held in servo_out
+    RC_Channel&			_rc_thrust;
+    RC_Channel&			_rc_strafe;
     uint16_t            _speed_hz;              // speed in hz to send updates to motors
     int16_t             _min_throttle;          // the minimum throttle to be sent to the motors when they're on (prevents motors stalling while flying)
     int16_t             _max_throttle;          // the maximum throttle to be sent to the motors (sometimes limited by slow start)

@@ -100,7 +100,8 @@ void AP_MotorsMatrix::output_min()
     // fill the motor_out[] array for HIL use and send minimum value to each motor
     for( i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++ ) {
         if( motor_enabled[i] ) {
-            hal.rcout->write(pgm_read_byte(&_motor_to_channel_map[i]), _rc_throttle.radio_min);
+            //hal.rcout->write(pgm_read_byte(&_motor_to_channel_map[i]), _rc_throttle.radio_min);
+            hal.rcout->write(pgm_read_byte(&_motor_to_channel_map[i]), 1500);
         }
     }
 }
@@ -159,6 +160,8 @@ void AP_MotorsMatrix::output_armed()
     _rc_pitch.calc_pwm();
     _rc_throttle.calc_pwm();
     _rc_yaw.calc_pwm();
+    _rc_thrust.calc_pwm();
+    _rc_strafe.calc_pwm();
 
     // if we are not sending a throttle output, we cut the motors
     if (_rc_throttle.servo_out == 0) {
@@ -172,7 +175,7 @@ void AP_MotorsMatrix::output_armed()
         for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
             // spin motors at minimum
             if (motor_enabled[i]) {
-                motor_out[i] = _rc_throttle.radio_min + _spin_when_armed_ramped;
+                motor_out[i] = 1500;
             }
         }
 
@@ -204,6 +207,8 @@ void AP_MotorsMatrix::output_armed()
                 }
             }
         }
+
+
 
         // calculate throttle that gives most possible room for yaw (range 1000 ~ 2000) which is the lower of:
         //      1. mid throttle - average of highest and lowest motor (this would give the maximum possible room margin above the highest motor and below the lowest)
@@ -305,11 +310,21 @@ void AP_MotorsMatrix::output_armed()
         // add scaled roll, pitch, constrained yaw and throttle for each motor
         for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
             if (motor_enabled[i]) {
-                motor_out[i] = out_best_thr_pwm+thr_adj +
+                motor_out[i] =
                                rpy_scale*rpy_out[i];
             }
         }
 
+
+
+        //Add pilot inputs
+        motor_out[0] += throttle_radio_output;
+    	motor_out[1] += throttle_radio_output;
+    	motor_out[2] += thrust_radio_output;
+    	motor_out[3] += thrust_radio_output;
+    	motor_out[4] += throttle_radio_output;
+    	motor_out[6] += strafe_radio_output;
+        /*
         // adjust for throttle curve
         if (_throttle_curve_enabled) {
             for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
@@ -318,6 +333,7 @@ void AP_MotorsMatrix::output_armed()
                 }
             }
         }
+        */
         // clip motor output if required (shouldn't be)
         for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
             if (motor_enabled[i]) {
@@ -332,6 +348,17 @@ void AP_MotorsMatrix::output_armed()
             hal.rcout->write(pgm_read_byte(&_motor_to_channel_map[i]), motor_out[i]);
         }
     }
+
+    hal.console.printf("\nThrottle Motors:\
+    					\n1: %d\
+						\n2: %d\
+						\n5: %d\
+						\n\nThrust Motors:\
+						\n3: %d\
+						\n4: %d\
+						\n\nStrafe Motor:\
+						\n6: %d",
+						motor_out[0], motor_out[1], motor_out[4], motor_out[2], motor_out[3], motor_out[5]);
 }
 
 // output_disarmed - sends commands to the motors

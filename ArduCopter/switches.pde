@@ -71,6 +71,7 @@ static void read_aux_switches()
         return;
     }
 
+    /*
     // check if ch7 switch has changed position
     switch_position = read_3pos_switch(g.rc_7.radio_in);
     if (ap.CH7_flag != switch_position) {
@@ -90,11 +91,14 @@ static void read_aux_switches()
         // invoke the appropriate function
         do_aux_switch_function(g.ch8_option, ap.CH8_flag);
     }
+    */
 }
 
+/*
 // init_aux_switches - invoke configured actions at start-up for aux function where it is safe to do so
 static void init_aux_switches()
 {
+
     // set the CH7 flag
     ap.CH7_flag = read_3pos_switch(g.rc_7.radio_in);
     ap.CH8_flag = read_3pos_switch(g.rc_8.radio_in);
@@ -143,7 +147,7 @@ static void init_aux_switches()
             break;
     }
 }
-
+*/
 // do_aux_switch_function - implement the function invoked by the ch7 or ch8 switch
 static void do_aux_switch_function(int8_t ch_function, uint8_t ch_flag)
 {

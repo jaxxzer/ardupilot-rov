@@ -27,23 +27,41 @@ void AP_MotorsHexa::setup_motors()
 {
     // call parent
     AP_MotorsMatrix::setup_motors();
+    float
+		//Front left downward facing
+		MOT_1_ROLL_FACTOR = -0.5,
+		MOT_1_PITCH_FACTOR = 0.5,
+		MOT_1_YAW_FACTOR = 0,
 
-    // hard coded config for supported frames
-    if( _flags.frame_orientation == AP_MOTORS_PLUS_FRAME ) {
-        // plus frame set-up
-        add_motor(AP_MOTORS_MOT_1,   0, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  1);
-        add_motor(AP_MOTORS_MOT_2, 180, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 4);
-        add_motor(AP_MOTORS_MOT_3,-120, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  5);
-        add_motor(AP_MOTORS_MOT_4,  60, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 2);
-        add_motor(AP_MOTORS_MOT_5, -60, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 6);
-        add_motor(AP_MOTORS_MOT_6, 120, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  3);
-    }else{
-        // X frame set-up
-        add_motor(AP_MOTORS_MOT_1,  90, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  2);
-        add_motor(AP_MOTORS_MOT_2, -90, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 5);
-        add_motor(AP_MOTORS_MOT_3, -30, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  6);
-        add_motor(AP_MOTORS_MOT_4, 150, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 3);
-        add_motor(AP_MOTORS_MOT_5,  30, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 1);
-        add_motor(AP_MOTORS_MOT_6,-150, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  4);
-    }
-}
+		//Front right downward facing
+		MOT_2_ROLL_FACTOR = 0.5,
+		MOT_2_PITCH_FACTOR = 0.5,
+		MOT_2_YAW_FACTOR = 0,
+
+		//Mid left backward facing
+		MOT_3_ROLL_FACTOR = 0,
+		MOT_3_PITCH_FACTOR = 0,
+		MOT_3_YAW_FACTOR = 1.0,
+
+		//Mid right backward facing
+		MOT_4_ROLL_FACTOR = 0,
+		MOT_4_PITCH_FACTOR = 0,
+		MOT_4_YAW_FACTOR = -1.0,
+
+		//Rear motor downward facing
+		MOT_5_ROLL_FACTOR = 0,
+		MOT_5_PITCH_FACTOR = -1.0,
+		MOT_5_YAW_FACTOR = 0.0,
+
+		//Bottom motor facing left
+		MOT_6_ROLL_FACTOR = 0.3,
+		MOT_6_PITCH_FACTOR = 0.5,
+		MOT_6_YAW_FACTOR = 0.0;
+
+
+	add_motor_raw(AP_MOTORS_MOT_1, MOT_1_ROLL_FACTOR, MOT_1_PITCH_FACTOR, MOT_1_YAW_FACTOR, 1);
+	add_motor_raw(AP_MOTORS_MOT_2, MOT_2_ROLL_FACTOR, MOT_2_PITCH_FACTOR, MOT_2_YAW_FACTOR, 2);
+	add_motor_raw(AP_MOTORS_MOT_3, MOT_3_ROLL_FACTOR, MOT_3_PITCH_FACTOR, MOT_3_YAW_FACTOR, 3);
+	add_motor_raw(AP_MOTORS_MOT_4, MOT_4_ROLL_FACTOR, MOT_4_PITCH_FACTOR, MOT_4_YAW_FACTOR, 4);
+	add_motor_raw(AP_MOTORS_MOT_5, MOT_5_ROLL_FACTOR, MOT_5_PITCH_FACTOR, MOT_5_YAW_FACTOR, 5);
+	add_motor_raw(AP_MOTORS_MOT_6, MOT_6_ROLL_FACTOR, MOT_6_PITCH_FACTOR, MOT_6_YAW_FACTOR, 6);
