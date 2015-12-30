@@ -94,11 +94,11 @@ static void read_aux_switches()
     */
 }
 
-/*
+
 // init_aux_switches - invoke configured actions at start-up for aux function where it is safe to do so
 static void init_aux_switches()
 {
-
+	/*
     // set the CH7 flag
     ap.CH7_flag = read_3pos_switch(g.rc_7.radio_in);
     ap.CH8_flag = read_3pos_switch(g.rc_8.radio_in);
@@ -146,11 +146,13 @@ static void init_aux_switches()
             do_aux_switch_function(g.ch8_option, ap.CH8_flag);
             break;
     }
+    */
 }
-*/
+
 // do_aux_switch_function - implement the function invoked by the ch7 or ch8 switch
 static void do_aux_switch_function(int8_t ch_function, uint8_t ch_flag)
 {
+	/*
     int8_t tmp_function = ch_function;
 
     // multi mode check
@@ -451,6 +453,7 @@ static void do_aux_switch_function(int8_t ch_function, uint8_t ch_flag)
         ServoRelayEvents.do_set_relay(0, ch_flag == AUX_SWITCH_HIGH);
         break;
     }
+    */
 }
 
 // save_trim - adds roll and pitch trims from the radio to ahrs

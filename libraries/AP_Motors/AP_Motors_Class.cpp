@@ -71,11 +71,32 @@ const AP_Param::GroupInfo AP_Motors::var_info[] PROGMEM = {
 };
 
 // Constructor
+AP_Motors::AP_Motors( RC_Channel& rc_roll, RC_Channel& rc_pitch, RC_Channel& rc_throttle, RC_Channel& rc_yaw, RC_Channel& rc_thrust, RC_Channel& rc_strafe, uint16_t speed_hz ) :
+    _rc_roll(rc_roll),
+    _rc_pitch(rc_pitch),
+    _rc_throttle(rc_throttle),
+    _rc_yaw(rc_yaw),
+	_rc_thrust(rc_thrust),
+	_rc_strafe(rc_strafe),
+    _speed_hz(speed_hz),
+    _min_throttle(AP_MOTORS_DEFAULT_MIN_THROTTLE),
+    _max_throttle(AP_MOTORS_DEFAULT_MAX_THROTTLE),
+    _hover_out(AP_MOTORS_DEFAULT_MID_THROTTLE),
+    _spin_when_armed_ramped(0)
+{
+    AP_Param::setup_object_defaults(this, var_info);
+
+    // slow start motors from zero to min throttle
+    _flags.slow_start_low_end = true;
+};
+
 AP_Motors::AP_Motors( RC_Channel& rc_roll, RC_Channel& rc_pitch, RC_Channel& rc_throttle, RC_Channel& rc_yaw, uint16_t speed_hz ) :
     _rc_roll(rc_roll),
     _rc_pitch(rc_pitch),
     _rc_throttle(rc_throttle),
     _rc_yaw(rc_yaw),
+	_rc_thrust(rc_yaw),
+	_rc_strafe(rc_yaw),
     _speed_hz(speed_hz),
     _min_throttle(AP_MOTORS_DEFAULT_MIN_THROTTLE),
     _max_throttle(AP_MOTORS_DEFAULT_MAX_THROTTLE),

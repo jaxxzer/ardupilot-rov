@@ -447,7 +447,7 @@ static MOTOR_CLASS motors(g.rc_1, g.rc_2, g.rc_3, g.rc_4, g.single_servo_1, g.si
 #elif FRAME_CONFIG == COAX_FRAME  // single constructor requires extra servos for flaps
 static MOTOR_CLASS motors(g.rc_1, g.rc_2, g.rc_3, g.rc_4, g.single_servo_1, g.single_servo_2);
 #else
-static MOTOR_CLASS motors(g.rc_1, g.rc_2, g.rc_3, g.rc_4);
+static MOTOR_CLASS motors(g.rc_1, g.rc_2, g.rc_3, g.rc_4, g.rc_7, g.rc_8);
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////

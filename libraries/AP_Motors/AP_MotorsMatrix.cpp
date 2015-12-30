@@ -318,12 +318,12 @@ void AP_MotorsMatrix::output_armed()
 
 
         //Add pilot inputs
-        motor_out[0] += throttle_radio_output;
-    	motor_out[1] += throttle_radio_output;
-    	motor_out[2] += thrust_radio_output;
-    	motor_out[3] += thrust_radio_output;
-    	motor_out[4] += throttle_radio_output;
-    	motor_out[6] += strafe_radio_output;
+        motor_out[0] = motor_out[0] + _rc_throttle.pwm_out;
+    	motor_out[1] = motor_out[1] + _rc_throttle.pwm_out;
+    	motor_out[2] = motor_out[2] + _rc_thrust.pwm_out;
+    	motor_out[3] = motor_out[3] + _rc_thrust.pwm_out;
+    	motor_out[4] = motor_out[4] + _rc_throttle.pwm_out;
+    	motor_out[6] = motor_out[5] + _rc_strafe.pwm_out;
         /*
         // adjust for throttle curve
         if (_throttle_curve_enabled) {
@@ -349,7 +349,7 @@ void AP_MotorsMatrix::output_armed()
         }
     }
 
-    hal.console.printf("\nThrottle Motors:\
+    hal.console->printf("\nThrottle Motors:\
     					\n1: %d\
 						\n2: %d\
 						\n5: %d\
