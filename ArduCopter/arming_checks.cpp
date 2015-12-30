@@ -375,6 +375,7 @@ void Copter::pre_arm_rc_checks()
         return;
     }
 
+    //ToDo: Add checks for additional control channels
     // if we've gotten this far rc is ok
     set_pre_arm_rc_check(true);
 }

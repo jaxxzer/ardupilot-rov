@@ -128,6 +128,7 @@ protected:
     float               rel_pwm_to_thr_range(float pwm) const;
     float               thr_range_to_rel_pwm(float thr) const;
 
+    // Called by
     // convert RPY and Throttle servo ranges from legacy controller scheme back into PWM values
     // RPY channels typically +/-45 degrees servo travel between +/-400 PWM
     // Throttle channel typically 0-1000 range converts to 1100-1900 PWM for final output signal to motors
@@ -136,6 +137,11 @@ protected:
     float               calc_pitch_pwm() { return (_pitch_control_input * _rpy_pwm_scalar); }
     float               calc_yaw_pwm() { return (_yaw_control_input * _rpy_pwm_scalar); }
     int16_t             calc_throttle_radio_output() { return (_throttle_control_input * _throttle_pwm_scalar) + _throttle_radio_min;}
+    //int16_t             calc_throttle_radio_output() { return _throttle_in;}
+    int16_t             calc_thrust_radio_output() { return _thrust_in;}
+    int16_t             calc_strafe_radio_output() { return _strafe_in;}
+
+
 
     // flag bitmask
     struct {

@@ -61,7 +61,7 @@
 #include <AC_PID/AC_PI_2D.h>           // PID library (2-axis)
 #include <AC_PID/AC_HELI_PID.h>        // Heli specific Rate PID library
 #include <AC_PID/AC_P.h>               // P library
-#include <AC_AttitudeControl/AC_AttitudeControl_Multi.h> // Attitude control library
+#include <AC_AttitudeControl/AC_AttitudeControl_ROV.h> // Attitude control library
 #include <AC_AttitudeControl/AC_AttitudeControl_Heli.h> // Attitude control library for traditional helicopter
 #include <AC_AttitudeControl/AC_PosControl.h>      // Position control library
 #include <RC_Channel/RC_Channel.h>         // RC Channel Library
@@ -439,7 +439,7 @@ private:
 #if FRAME_CONFIG == HELI_FRAME
     AC_AttitudeControl_Heli attitude_control;
 #else
-    AC_AttitudeControl_Multi attitude_control;
+    AC_AttitudeControl_ROV attitude_control;
 #endif
     AC_PosControl pos_control;
     AC_WPNav wp_nav;
@@ -597,6 +597,7 @@ private:
     float get_look_ahead_yaw();
     void update_thr_average();
     void set_throttle_takeoff();
+    // in Attitude.cpp
     int16_t get_pilot_desired_throttle(int16_t throttle_control);
     float get_pilot_desired_climb_rate(float throttle_control);
     float get_non_takeoff_throttle();

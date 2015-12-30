@@ -98,7 +98,7 @@ void AP_MotorsMatrix::output_min()
     hal.rcout->cork();
     for( i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++ ) {
         if( motor_enabled[i] ) {
-            hal.rcout->write(i, _throttle_radio_min);
+            hal.rcout->write(i, 1500);
         }
     }
     hal.rcout->push();
@@ -180,6 +180,8 @@ void AP_MotorsMatrix::output_armed_stabilizing()
     int16_t pitch_pwm;                                              // pitch pwm value, initially calculated by calc_roll_pwm() but may be modified after, +/- 400
     int16_t yaw_pwm;                                                // yaw pwm value, initially calculated by calc_yaw_pwm() but may be modified after, +/- 400
     int16_t throttle_radio_output;                                  // total throttle pwm value, summed onto throttle channel minimum, typically ~1100-1900
+    int16_t thrust_radio_output;
+    int16_t strafe_radio_output;
     int16_t out_min_pwm = _throttle_radio_min + _min_throttle;      // minimum pwm value we can send to the motors
     int16_t out_max_pwm = _throttle_radio_max;                      // maximum pwm value we can send to the motors
     int16_t out_mid_pwm = (out_min_pwm+out_max_pwm)/2;              // mid pwm value we can send to the motors
@@ -211,10 +213,16 @@ void AP_MotorsMatrix::output_armed_stabilizing()
         limit.throttle_upper = true;
     }
 
+    // In AP_MotorsMulticopter.h ...
+    // rpy pwm values are float +/-400
     roll_pwm = calc_roll_pwm();
     pitch_pwm = calc_pitch_pwm();
     yaw_pwm = calc_yaw_pwm();
+
+    //int16_t pwm value (1500 is neutral, 1900 is full forward, 1100 is full reverse)
     throttle_radio_output = calc_throttle_radio_output();
+    thrust_radio_output = calc_thrust_radio_output();
+    strafe_radio_output = calc_strafe_radio_output();
 
     // calculate roll and pitch for each motor
     // set rpy_low and rpy_high to the lowest and highest values of the motors
@@ -233,6 +241,8 @@ void AP_MotorsMatrix::output_armed_stabilizing()
             }
         }
     }
+
+    /*
 
     // calculate throttle that gives most possible room for yaw (range 1000 ~ 2000) which is the lower of:
     //      1. mid throttle - average of highest and lowest motor (this would give the maximum possible room margin above the highest motor and below the lowest)
@@ -336,23 +346,24 @@ void AP_MotorsMatrix::output_armed_stabilizing()
         limit.yaw = true;
     }
 
+*/
 
     // add scaled roll, pitch, constrained yaw and throttle for each motor
     for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
         if (motor_enabled[i]) {
             motor_out[i] =
-                            1500 + rpy_scale*rpy_out[i];
+                            rpy_scale*rpy_out[i];
         }
     }
 
-/*
-    motor_out[0] += throttle_radio;
-	motor_out[1] += throttle_radio;
-	motor_out[2] += thrust_radio;
-	motor_out[3] += thrust_radio;
-	motor_out[4] += throttle_radio;
-	motor_out[6] += strafe_radio;
-*/
+    //Add pilot inputs
+    motor_out[0] += throttle_radio_output;
+	motor_out[1] += throttle_radio_output;
+	motor_out[2] += thrust_radio_output;
+	motor_out[3] += thrust_radio_output;
+	motor_out[4] += throttle_radio_output;
+	motor_out[6] += strafe_radio_output;
+
 
 
 

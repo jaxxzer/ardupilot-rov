@@ -55,6 +55,13 @@ void Copter::acro_run()
 
     // output pilot's throttle without angle boost
     attitude_control.set_throttle_out(pilot_throttle_scaled, false, g.throttle_filt);
+
+
+    //motors.set_throttle(channel_throttle->control_in);
+    motors.set_thrust(channel_thrust->control_in);
+    motors.set_strafe(channel_strafe->control_in);
+
+
 }
 
 

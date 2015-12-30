@@ -60,12 +60,13 @@ public:
     bool                get_interlock() const { return _flags.interlock; };
 
     // set_roll, set_pitch, set_yaw, set_throttle
+    // called in AC_AttitudeControl.cpp
     void                set_roll(int16_t roll_in) { _roll_control_input = roll_in; };                   // range -4500 ~ 4500
     void                set_pitch(int16_t pitch_in) { _pitch_control_input = pitch_in; };               // range -4500 ~ 4500
     void                set_yaw(int16_t yaw_in) { _yaw_control_input = yaw_in; };                       // range -4500 ~ 4500
     void                set_throttle(float throttle_in) { _throttle_in = constrain_float(throttle_in,-100.0f,1100.0f); };   // range 0 ~ 1000
-    void                set_thrust(float thrust_in) { _thrust_in = constrain_float(thrust_in,-100.0f,1100.0f); };   // range 0 ~ 1000
-    void                set_strafe(float strafe_in) { _strafe_in = constrain_float(strafe_in,-100.0f,1100.0f); };   // range 0 ~ 1000
+    void                set_thrust(float thrust_in) { _thrust_in = constrain_float(thrust_in,1100.0f,1900.0f); };   // range 0 ~ 1000
+    void                set_strafe(float strafe_in) { _strafe_in = constrain_float(strafe_in,1100.0f,1900.0f); };   // range 0 ~ 1000
 
     void                set_stabilizing(bool stabilizing) { _flags.stabilizing = stabilizing; }
 
@@ -74,6 +75,9 @@ public:
     float               get_pitch() const { return _pitch_control_input; }
     float               get_yaw() const { return _yaw_control_input; }
     float               get_throttle() const { return _throttle_control_input; }
+    float               get_thrust() const { return _thrust_in; }
+    float               get_strafe() const { return _strafe_in; }
+
 
     void                set_throttle_filter_cutoff(float filt_hz) { _throttle_filter.set_cutoff_frequency(filt_hz); }
 
@@ -155,6 +159,7 @@ protected:
     uint16_t            _speed_hz;                  // speed in hz to send updates to motors
     int16_t             _throttle_radio_min;        // minimum radio channel pwm
     int16_t             _throttle_radio_max;        // maximum radio channel pwm
+    // throttle, thrust, strafe constrained to 0~1000
     float               _throttle_in;               // last throttle input from set_throttle caller
     float               _thrust_in;                 // last thrust input from set_thrust caller
     float               _strafe_in;                 // last strafe input from set_strafe caller
