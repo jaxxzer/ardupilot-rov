@@ -221,7 +221,7 @@ RC_Channel::calc_pwm(void)
         radio_out       = pwm_out + radio_trim;
     }
 
-    radio_out = constrain_int16(radio_out, radio_min.get(), radio_max.get());
+    //radio_out = constrain_int16(radio_out, radio_min.get(), radio_max.get());
 }
 
 // ------------------------------------------

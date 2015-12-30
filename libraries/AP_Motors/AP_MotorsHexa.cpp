@@ -54,8 +54,8 @@ void AP_MotorsHexa::setup_motors()
 		MOT_5_YAW_FACTOR = 0.0,
 
 		//Bottom motor facing left
-		MOT_6_ROLL_FACTOR = 0.3,
-		MOT_6_PITCH_FACTOR = 0.5,
+		MOT_6_ROLL_FACTOR = 0.25,
+		MOT_6_PITCH_FACTOR = 0.0,
 		MOT_6_YAW_FACTOR = 0.0;
 
 
