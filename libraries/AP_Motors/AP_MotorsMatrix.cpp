@@ -160,8 +160,8 @@ void AP_MotorsMatrix::output_armed()
     _rc_pitch.calc_pwm();
     _rc_throttle.calc_pwm();
     _rc_yaw.calc_pwm();
-    _rc_thrust.calc_pwm();
-    _rc_strafe.calc_pwm();
+    //_rc_thrust.calc_pwm();
+    //_rc_strafe.calc_pwm();
 
     // if we are not sending a throttle output, we cut the motors
     if (_rc_throttle.servo_out == 0) {
@@ -320,12 +320,12 @@ void AP_MotorsMatrix::output_armed()
 
 
         //Add pilot inputs
-        motor_out[0] = motor_out[0] + _rc_throttle.radio_out;
-    	motor_out[1] = motor_out[1] + _rc_throttle.radio_out;
-    	motor_out[2] = motor_out[2] + _rc_thrust.radio_in;
-    	motor_out[3] = motor_out[3] + _rc_thrust.radio_in;
-    	motor_out[4] = motor_out[4] + _rc_throttle.radio_out;
-    	motor_out[5] = motor_out[5] + _rc_strafe.radio_in;
+        motor_out[0] += _rc_throttle.radio_in;
+    	motor_out[1] += _rc_throttle.radio_in;
+    	motor_out[2] += _rc_thrust.radio_in;
+    	motor_out[3] += _rc_thrust.radio_in;
+    	motor_out[4] += _rc_throttle.radio_in;
+    	motor_out[5] += _rc_strafe.radio_in;
         /*
         // adjust for throttle curve
         if (_throttle_curve_enabled) {

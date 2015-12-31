@@ -13,8 +13,9 @@ static void arm_motors_check()
 {
     static int16_t arming_counter;
 
-    // ensure throttle is down
-    if (g.rc_3.control_in > 0) {
+    // ensure throttle is centered
+    //if (g.rc_3.control_in > 0) {
+    if (g.rc_3.radio_in > 1530 || g.rc_3.radio_in < 1470) {
         arming_counter = 0;
         return;
     }
@@ -184,6 +185,7 @@ static bool init_arm_motors()
     // set hover throttle
     motors.set_mid_throttle(g.throttle_mid);
 
+/*
     // Cancel arming if throttle is raised too high so that copter does not suddenly take off
     read_radio();
     if (g.rc_3.control_in > g.throttle_cruise && g.throttle_cruise > 100) {
@@ -193,7 +195,7 @@ static bool init_arm_motors()
         in_arm_motors = false;
         return false;
     }
-
+*/
 #if SPRAYER == ENABLED
     // turn off sprayer's test if on
     sprayer.test_pump(false);
