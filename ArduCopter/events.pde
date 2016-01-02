@@ -263,6 +263,8 @@ static void failsafe_gcs_check()
     set_failsafe_gcs(true);
     Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_GCS, ERROR_CODE_FAILSAFE_OCCURRED);
 
+    init_disarm_motors(); // just cut the motors for gcs failsafe
+/*
     // clear overrides so that RC control can be regained with radio.
     hal.rcin->clear_overrides();
     failsafe.rc_override_active = false;
@@ -270,6 +272,7 @@ static void failsafe_gcs_check()
     // This is how to handle a failsafe.
     // use the throttle failsafe setting to decide what to do
     switch(control_mode) {
+
         case STABILIZE:
         case ACRO:
         case SPORT:
@@ -299,6 +302,8 @@ static void failsafe_gcs_check()
             }
             // if failsafe_throttle is 2 (i.e. FS_THR_ENABLED_CONTINUE_MISSION) no need to do anything
             break;
+
+
         default:
             if(home_distance > wp_nav.get_wp_radius()) {
                 if (!set_mode(RTL)) {
@@ -310,6 +315,8 @@ static void failsafe_gcs_check()
             }
             break;
     }
+
+*/
 }
 
 // failsafe_gcs_off_event - actions to take when GCS contact is restored

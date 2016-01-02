@@ -95,8 +95,8 @@ AP_Motors::AP_Motors( RC_Channel& rc_roll, RC_Channel& rc_pitch, RC_Channel& rc_
     _rc_pitch(rc_pitch),
     _rc_throttle(rc_throttle),
     _rc_yaw(rc_yaw),
-	_rc_thrust(rc_yaw),
-	_rc_strafe(rc_yaw),
+	_rc_thrust(rc_yaw),// !!! needs attention
+	_rc_strafe(rc_yaw),// !!!
     _speed_hz(speed_hz),
     _min_throttle(AP_MOTORS_DEFAULT_MIN_THROTTLE),
     _max_throttle(AP_MOTORS_DEFAULT_MAX_THROTTLE),

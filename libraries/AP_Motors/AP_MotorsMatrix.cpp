@@ -49,7 +49,7 @@ void AP_MotorsMatrix::set_update_rate( uint16_t speed_hz )
     uint32_t mask = 0;
     for( i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++ ) {
         if( motor_enabled[i] ) {
-		mask |= 1U << pgm_read_byte(&_motor_to_channel_map[i]);
+		mask |= 1U << pgm_read_byte(&_motor_to_channel_map[i]);// does this need to change to something else? in output_armed, we changed to i
         }
     }
     hal.rcout->set_freq( mask, _speed_hz );
@@ -124,8 +124,11 @@ uint16_t AP_MotorsMatrix::get_motor_mask()
 void AP_MotorsMatrix::output_armed()
 {
     int8_t i;
-    int16_t out_min_pwm = _rc_throttle.radio_min + _min_throttle;      // minimum pwm value we can send to the motors
-    int16_t out_max_pwm = _rc_throttle.radio_max;                      // maximum pwm value we can send to the motors
+//    int16_t out_min_pwm = _rc_throttle.radio_min + _min_throttle;      // minimum pwm value we can send to the motors
+//    int16_t out_max_pwm = _rc_throttle.radio_max;                      // maximum pwm value we can send to the motors
+    int16_t out_min_pwm = 1100;      // minimum pwm value we can send to the motors
+    int16_t out_max_pwm = 1900;                      // maximum pwm value we can send to the motors
+
     int16_t out_mid_pwm = (out_min_pwm+out_max_pwm)/2;                  // mid pwm value we can send to the motors
     int16_t out_best_thr_pwm;  // the is the best throttle we can come up which provides good control without climbing
     float rpy_scale = 1.0; // this is used to scale the roll, pitch and yaw to fit within the motor limits
@@ -163,6 +166,7 @@ void AP_MotorsMatrix::output_armed()
     //_rc_thrust.calc_pwm();
     //_rc_strafe.calc_pwm();
 
+/* Comment this because sending full descend will neutralize all channels, dont want this
     // if we are not sending a throttle output, we cut the motors
     if (_rc_throttle.servo_out == 0) {
         // range check spin_when_armed
@@ -172,6 +176,7 @@ void AP_MotorsMatrix::output_armed()
         if (_spin_when_armed_ramped > _min_throttle) {
             _spin_when_armed_ramped = _min_throttle;
         }
+
         for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
             // spin motors at minimum
             if (motor_enabled[i]) {
@@ -182,7 +187,8 @@ void AP_MotorsMatrix::output_armed()
         // Every thing is limited
         limit.roll_pitch = true;
         limit.yaw = true;
-
+*/
+    if(1==0) {
     } else {
 
         // check if throttle is below limit
@@ -320,13 +326,14 @@ void AP_MotorsMatrix::output_armed()
 
 
         //Add pilot inputs
+        //dirty, but may work underwater...
         motor_out[0] += _rc_throttle.radio_in;
     	motor_out[1] += _rc_throttle.radio_in;
     	motor_out[2] += _rc_thrust.radio_in;
     	motor_out[3] += _rc_thrust.radio_in;
     	motor_out[4] += _rc_throttle.radio_in;
     	motor_out[5] += _rc_strafe.radio_in;
-        /*
+/*
         // adjust for throttle curve
         if (_throttle_curve_enabled) {
             for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
@@ -335,15 +342,15 @@ void AP_MotorsMatrix::output_armed()
                 }
             }
         }
-
+*/
         // clip motor output if required (shouldn't be)
+    	// constrain pwm output to 1100~1900 us
         for (i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++) {
             if (motor_enabled[i]) {
                 motor_out[i] = constrain_int16(motor_out[i], out_min_pwm, out_max_pwm);
             }
         }
-        */
-    }
+    }//end if-else for zero throttle check
 
     // send output to each motor
     for( i=0; i<AP_MOTORS_MAX_NUM_MOTORS; i++ ) {

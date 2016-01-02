@@ -346,6 +346,7 @@ static bool GPS_ok()
 }
 
 // update_auto_armed - update status of auto_armed flag
+// auto_armed flag allows to initiate auto flight modes
 static void update_auto_armed()
 {
     // disarm checks

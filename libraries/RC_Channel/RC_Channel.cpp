@@ -221,7 +221,7 @@ RC_Channel::calc_pwm(void)
         radio_out       = pwm_out + radio_trim;
     }
 
-    //radio_out = constrain_int16(radio_out, radio_min.get(), radio_max.get());
+    radio_out = constrain_int16(radio_out, radio_min.get(), radio_max.get());
 }
 
 // ------------------------------------------
@@ -359,16 +359,8 @@ RC_Channel::norm_input()
     return constrain_float(ret, -1.0f, 1.0f);
 }
 
-/*
-    //Add pilot inputs
-    motor_out[0] += throttle_radio_output;
-	motor_out[1] += throttle_radio_output;
-	motor_out[2] += thrust_radio_output;
-	motor_out[3] += thrust_radio_output;
-	motor_out[4] += throttle_radio_output;
-	motor_out[6] += strafe_radio_output;
-  get percentage input from 0 to 100. This ignores the trim value.
- */
+
+//get percentage input from 0 to 100. This ignores the trim value.
 uint8_t
 RC_Channel::percent_input()
 {
