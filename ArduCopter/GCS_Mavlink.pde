@@ -872,10 +872,13 @@ void GCS_MAVLINK::handleMessage(mavlink_message_t* msg)
     case MAVLINK_MSG_ID_HEARTBEAT:      // MAV ID: 0
     {
         // We keep track of the last time we received a heartbeat from our GCS for failsafe purposes
-        /////////////////////comment this/////////////////////////////
+
+    	/////////////////////we are using 252 in Parameters.pde in order to recieve heartbeat from apmplanner////////////
+    	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////can modify this to use heartbeats from different gcs nodes//////////////////////////////////
     	if(msg->sysid != g.sysid_my_gcs) break;
-    	//////////////////////////////////////////////////////////////////////////////////////////////////////
-    	//////////////////////////////////////////////////////////////////////////////////
+    	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         failsafe.last_heartbeat_ms = millis();
         pmTest1++;
         break;
@@ -893,11 +896,17 @@ void GCS_MAVLINK::handleMessage(mavlink_message_t* msg)
         }
 
         // only accept custom modes because there is no easy mapping from Mavlink flight modes to AC flight modes
-        if (packet.base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) {
+       if (packet.base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) {
             if (set_mode(packet.custom_mode)) {
                 result = MAV_RESULT_ACCEPTED;
             }
-        }
+       }
+
+    	if (packet.base_mode >= 0 && packet.base_mode <=3) {
+    		if(set_mode(packet.base_mode)) {
+    				result = MAV_RESULT_ACCEPTED;
+    		}
+    	}
 
         // send ACK or NAK
         mavlink_msg_command_ack_send_buf(msg, chan, MAVLINK_MSG_ID_SET_MODE, result);

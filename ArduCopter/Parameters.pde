@@ -50,7 +50,10 @@ const AP_Param::Info var_info[] PROGMEM = {
     // @Description: Allows restricting radio overrides to only come from my ground station
     // @Range: 1 255
     // @User: Advanced
-    GSCALAR(sysid_my_gcs,   "SYSID_MYGCS",     255),
+	//GSCALAR(sysid_my_gcs,   "SYSID_MYGCS",     255),
+	GSCALAR(sysid_my_gcs,   "SYSID_MYGCS",     252),//252 in order to recieve heartbeat from apm planner, must be set on pi for mavros to be able to override RC.
+													//use command on pi:
+													//rosparam set mavros/system_id 252
 
     // @Param: SERIAL0_BAUD
     // @DisplayName: USB Console Baud Rate
