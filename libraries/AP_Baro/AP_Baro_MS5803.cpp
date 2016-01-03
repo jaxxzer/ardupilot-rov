@@ -48,7 +48,7 @@
 extern const AP_HAL::HAL& hal;
 
 #define CMD_MS5803_RESET 0x1E
-#define CMD_MS5803_PROM_Setup 0xA0
+#define CMD_MS5803_PROM_Setup 0xA0//Parameters (coefficients) factory calibration
 #define CMD_MS5803_PROM_C1 0xA2
 #define CMD_MS5803_PROM_C2 0xA4
 #define CMD_MS5803_PROM_C3 0xA6
@@ -68,12 +68,13 @@ uint32_t AP_Baro_MS5803::_timer;
 bool volatile AP_Baro_MS5803::_updated;
 
 AP_Baro_MS5803_Serial* AP_Baro_MS5803::_serial = NULL;
-AP_Baro_MS5803_SPI AP_Baro_MS5803::spi;
+//AP_Baro_MS5803_SPI AP_Baro_MS5803::spi;
 #if MS5803_WITH_I2C
 AP_Baro_MS5803_I2C AP_Baro_MS5803::i2c;
 #endif
 
 // SPI Device //////////////////////////////////////////////////////////////////
+/*
 
 void AP_Baro_MS5803_SPI::init()
 {
@@ -81,13 +82,13 @@ void AP_Baro_MS5803_SPI::init()
     if (_spi == NULL) {
         hal.scheduler->panic(PSTR("PANIC: AP_Baro_MS5803 did not get "
                     "valid SPI device driver!"));
-        return; /* never reached */
+        return;  never reached
     }
     _spi_sem = _spi->get_semaphore();
     if (_spi_sem == NULL) {
         hal.scheduler->panic(PSTR("PANIC: AP_Baro_MS5803 did not get "
                     "valid SPI semaphroe!"));
-        return; /* never reached */
+        return;  never reached
 
     }
 
@@ -109,7 +110,7 @@ uint32_t AP_Baro_MS5803_SPI::read_adc()
 {
     uint8_t tx[4];
     uint8_t rx[4];
-    memset(tx, 0, 4); /* first byte is addr = 0 */
+    memset(tx, 0, 4);  first byte is addr = 0
     _spi->transaction(tx, rx, 4);
     return (((uint32_t)rx[1])<<16) | (((uint32_t)rx[2])<<8) | ((uint32_t)rx[3]);
 }
@@ -128,10 +129,10 @@ bool AP_Baro_MS5803_SPI::sem_take_blocking() {
 
 bool AP_Baro_MS5803_SPI::sem_take_nonblocking()
 {
-    /**
+    *
      * Take nonblocking from a TimerProcess context &
      * monitor for bad failures
-     */
+
     static int semfail_ctr = 0;
     bool got = _spi_sem->take_nonblocking();
     if (!got) {
@@ -143,7 +144,7 @@ bool AP_Baro_MS5803_SPI::sem_take_nonblocking()
                                           "AP_Baro_MS5803::_update"));
             }
         }
-        return false; /* never reached */
+        return false;  never reached
     } else {
         semfail_ctr = 0;
     }
@@ -154,6 +155,7 @@ void AP_Baro_MS5803_SPI::sem_give()
 {
     _spi_sem->give();
 }
+*/
 
 // I2C Device //////////////////////////////////////////////////////////////////
 #if MS5803_WITH_I2C

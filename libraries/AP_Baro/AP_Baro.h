@@ -109,6 +109,7 @@ private:
 };
 
 #include "AP_Baro_MS5611.h"
+#include "AP_Baro_MS5803.h"
 #include "AP_Baro_BMP085.h"
 #include "AP_Baro_HIL.h"
 #include "AP_Baro_PX4.h"

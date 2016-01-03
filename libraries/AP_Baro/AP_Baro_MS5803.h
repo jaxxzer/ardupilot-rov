@@ -6,11 +6,11 @@
 #include <AP_HAL.h>
 #include "AP_Baro.h"
 
-#if CONFIG_HAL_BOARD != HAL_BOARD_APM2 && CONFIG_HAL_BOARD != HAL_BOARD_APM1
+//#if CONFIG_HAL_BOARD != HAL_BOARD_APM2 && CONFIG_HAL_BOARD != HAL_BOARD_APM1
 #define MS5803_WITH_I2C 1
-#else
-#define MS5803_WITH_I2C 0
-#endif
+//#else
+//#define MS5803_WITH_I2C 0
+//#endif
 
 
 /** Abstract serial device driver for MS5803. */
@@ -39,7 +39,7 @@ public:
     virtual void sem_give() {}
 };
 
-/** SPI serial device. */
+/** SPI serial device.
 class AP_Baro_MS5803_SPI : public AP_Baro_MS5803_Serial
 {
 public:
@@ -54,7 +54,7 @@ public:
 private:
     AP_HAL::SPIDeviceDriver *_spi;
     AP_HAL::Semaphore *_spi_sem;
-};
+};*/
 
 #if MS5803_WITH_I2C
 /** I2C serial device. */
@@ -74,6 +74,7 @@ private:
 };
 #endif // MS5803_WITH_I2C
 
+
 class AP_Baro_MS5803 : public AP_Baro
 {
 public:
@@ -90,7 +91,7 @@ public:
 
 
     /* Serial port drivers to pass to "init". */
-    static AP_Baro_MS5803_SPI spi;
+    //static AP_Baro_MS5803_SPI spi;
 #if MS5803_WITH_I2C
     static AP_Baro_MS5803_I2C i2c;
 #endif

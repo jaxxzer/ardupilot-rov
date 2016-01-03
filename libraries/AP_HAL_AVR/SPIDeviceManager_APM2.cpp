@@ -37,6 +37,7 @@ void APM2SPIDeviceManager::init(void* machtnichts) {
     /* ms5611: run clock at 8MHz */
     _ms5611 = new AVRSPI0DeviceDriver(ms5611_cs, SPI0_SPCR_500kHz, SPI0_SPCR_8MHz, SPI0_SPSR_8MHz);
     _ms5611->init();
+
    
     /* optflow cs is on Arduino pin A3, PORTF3 */
     AVRDigitalSource* optflow_cs = new AVRDigitalSource(_BV(3), PF);
@@ -67,8 +68,8 @@ AP_HAL::SPIDeviceDriver* APM2SPIDeviceManager::device(enum AP_HAL::SPIDevice d)
             return _dataflash;
         case AP_HAL::SPIDevice_MS5611:
             return _ms5611;
-        case AP_HAL::SPIDevice_MS5803:
-        	return _ms5803;
+        //case AP_HAL::SPIDevice_MS5803:
+        //	return _ms5803;
         case AP_HAL::SPIDevice_MPU6000:
             return _mpu6k;
         case AP_HAL::SPIDevice_ADNS3080_SPI0:

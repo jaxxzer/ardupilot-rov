@@ -268,8 +268,13 @@ static AP_Baro_VRBRAIN barometer;
 static AP_Baro_HIL barometer;
 #elif CONFIG_BARO == HAL_BARO_MS5611
 static AP_Baro_MS5611 barometer(&AP_Baro_MS5611::i2c);
+#elif CONFIG_BARO == HAL_BARO_MS5803
+static AP_Baro_MS5803 barometer(&AP_Baro_MS5803::i2c);
 #elif CONFIG_BARO == HAL_BARO_MS5611_SPI
 static AP_Baro_MS5611 barometer(&AP_Baro_MS5611::spi);
+
+//black positive
+//green negative
 #else
  #error Unrecognized CONFIG_BARO setting
 #endif
