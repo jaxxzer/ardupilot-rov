@@ -28,6 +28,7 @@ public:
 private:
     AVRSPI0DeviceDriver* _mpu6k;
     AVRSPI0DeviceDriver* _ms5611;
+    AVRSPI0DeviceDriver* _ms5803;
     AVRSPI0DeviceDriver* _optflow_spi0;
 
     AVRSPI3DeviceDriver* _dataflash;

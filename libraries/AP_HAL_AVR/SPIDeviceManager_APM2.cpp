@@ -67,6 +67,8 @@ AP_HAL::SPIDeviceDriver* APM2SPIDeviceManager::device(enum AP_HAL::SPIDevice d)
             return _dataflash;
         case AP_HAL::SPIDevice_MS5611:
             return _ms5611;
+        case AP_HAL::SPIDevice_MS5803:
+        	return _ms5803;
         case AP_HAL::SPIDevice_MPU6000:
             return _mpu6k;
         case AP_HAL::SPIDevice_ADNS3080_SPI0:
