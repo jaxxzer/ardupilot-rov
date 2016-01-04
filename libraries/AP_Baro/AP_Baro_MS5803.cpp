@@ -160,6 +160,13 @@ void AP_Baro_MS5803_SPI::sem_give()
 // I2C Device //////////////////////////////////////////////////////////////////
 #if MS5803_WITH_I2C
 
+
+//External baro for water pressure, I2C address is 0x76.
+//MS5803 can have either 0x77 or 0x76, the lowest bit of the address is the compliment of the signal on the CSB pin.
+//Set CSB pin high for 0x76
+//Low for 0x77
+//Do not leave CSB floating
+//See ArduCopter.pde
 #if CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_NAVIO
 #define MS5803_ADDR 0x77
 #else
@@ -437,8 +444,8 @@ uint8_t AP_Baro_MS5803::read()
             D2 = ((float)sD2) / d2count;
         }
         _pressure_samples = d1count;
-        _raw_press = D1;
-        _raw_temp = D2;
+        _raw_press = D1;//in mbar
+        _raw_temp = D2;//in degrees C*100
     }
     _calculate();
     if (updated) {
@@ -486,11 +493,11 @@ void AP_Baro_MS5803::_calculate()
 
 float AP_Baro_MS5803::get_pressure()
 {
-    return Press;
+    return Press; //In mbar
 }
 
 float AP_Baro_MS5803::get_temperature()
 {
     // temperature in degrees C units
-    return Temp;
+    return Temp;// in degreeC*100
 }

@@ -12,25 +12,36 @@ static void init_barometer(bool full_calibration)
     gcs_send_text_P(SEVERITY_LOW, PSTR("Calibrating barometer"));
     if (full_calibration) {
         barometer.calibrate();
+        internal_barometer.calibrate();
     }else{
         barometer.update_calibration();
+        internal_barometer.update_calibration();
     }
     gcs_send_text_P(SEVERITY_LOW, PSTR("barometer calibration complete"));
 }
+
 
 // return barometric altitude in centimeters
 static void read_barometer(void)
 {
     barometer.read();
+    internal_barometer.read();
+
     if (should_log(MASK_LOG_IMU)) {
         Log_Write_Baro();
     }
+
     baro_alt = barometer.get_altitude() * 100.0f;
     baro_climbrate = barometer.get_climb_rate() * 100.0f;
 
     // run glitch protection and update AP_Notify if home has been initialised
     baro_glitch.check_alt();
-    bool report_baro_glitch = (baro_glitch.glitching() && !ap.usb_connected && hal.util->safety_switch_state() != AP_HAL::Util::SAFETY_DISARMED);
+
+
+//    bool report_baro_glitch = (baro_glitch.glitching() && !ap.usb_connected && hal.util->safety_switch_state() != AP_HAL::Util::SAFETY_DISARMED);
+    // take out check for usb connected
+    bool report_baro_glitch = (baro_glitch.glitching() && hal.util->safety_switch_state() != AP_HAL::Util::SAFETY_DISARMED);
+
     if (AP_Notify::flags.baro_glitching != report_baro_glitch) {
         if (baro_glitch.glitching()) {
             Log_Write_Error(ERROR_SUBSYSTEM_BARO, ERROR_CODE_BARO_GLITCH);

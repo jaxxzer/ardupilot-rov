@@ -168,7 +168,9 @@ float AP_Baro::get_altitude(void)
     }
 
     float pressure = get_pressure();
-    float alt = get_altitude_difference(_ground_pressure, pressure);
+    //float alt = get_altitude_difference(_ground_pressure, pressure);
+
+    float alt = (pressure - _ground_pressure) / 10052.0f; //101325Pa is sea level air pressure, 10052 Pascal/ m depth in water. No temperature or depth compensation for density of water.
 
     // record that we have consumed latest data
     _last_altitude_t = _last_update;
@@ -185,7 +187,9 @@ float AP_Baro::get_altitude(void)
     _climb_rate_filter.update(_altitude, _last_update);
 
     return _altitude + _alt_offset;
+    //return alt;//    10052Pa/m depth.
 }
+
 
 // return current scale factor that converts from equivalent to true airspeed
 // valid for altitudes up to 10km AMSL

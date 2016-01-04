@@ -149,6 +149,7 @@ static void init_ardupilot()
     rssi_analog_source      = hal.analogin->channel(g.rssi_pin);
 
     barometer.init();
+    internal_barometer.init();
 
     // init the GCS
     gcs[0].init(hal.uartA);

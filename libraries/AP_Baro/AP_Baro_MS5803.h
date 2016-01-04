@@ -7,7 +7,7 @@
 #include "AP_Baro.h"
 
 //#if CONFIG_HAL_BOARD != HAL_BOARD_APM2 && CONFIG_HAL_BOARD != HAL_BOARD_APM1
-#define MS5803_WITH_I2C 1
+#define MS5803_WITH_I2C 1 //We will basically always be hooking it up externally, this is easy, and we dont want to set up another spi device requiring chip select pin on micro
 //#else
 //#define MS5803_WITH_I2C 0
 //#endif
@@ -39,7 +39,8 @@ public:
     virtual void sem_give() {}
 };
 
-/** SPI serial device.
+/** SPI serial device. We will just go through i2c port for external sensors on a breakout board
+ *
 class AP_Baro_MS5803_SPI : public AP_Baro_MS5803_Serial
 {
 public:

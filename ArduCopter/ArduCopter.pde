@@ -269,16 +269,22 @@ static AP_Baro_HIL barometer;
 #elif CONFIG_BARO == HAL_BARO_MS5611
 static AP_Baro_MS5611 barometer(&AP_Baro_MS5611::i2c);
 #elif CONFIG_BARO == HAL_BARO_MS5803
-static AP_Baro_MS5803 barometer(&AP_Baro_MS5803::i2c);
+static AP_Baro_MS5803 barometer(&AP_Baro_MS5803::i2c);//External baro for water pressure, I2C address is 0x76.
+//MS5803 can have either 0x77 or 0x76, the lowest bit of the address is the compliment of the signal on the CSB pin.
+//Set CSB pin high for 0x76
+//Low for 0x77
+//Do not leave CSB floating
+//see AP_Baro_MS5803.cpp
+static AP_Baro_MS5611 internal_barometer(&AP_Baro_MS5611::spi);//Onboard sensor: Internal pressure for electronics. ToDo: Make new failsafe event based on internal pressure
+
 #elif CONFIG_BARO == HAL_BARO_MS5611_SPI
 static AP_Baro_MS5611 barometer(&AP_Baro_MS5611::spi);
 
-//black positive
-//green negative
 #else
  #error Unrecognized CONFIG_BARO setting
 #endif
 static Baro_Glitch baro_glitch(barometer);
+
 
 #if CONFIG_COMPASS == HAL_COMPASS_PX4
 static AP_Compass_PX4 compass;
