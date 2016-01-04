@@ -31,10 +31,12 @@ public:
     virtual bool            init()=0;
     virtual uint8_t         read() = 0;
 
-    // pressure in Pascal. Divide by 100 for millibars or hectopascals
+    // not pascal, exactly, it is the pressure in millibar*100 or millibar*10 for ms5803
+    // pressure in Pascal. For ms5611, divide by 100 for millibars or hectopascals
+    // For ms5803, divide by 10 for millibar
     virtual float           get_pressure() = 0;
 
-    // temperature in degrees C
+    // temperature in degrees C * 100
     virtual float           get_temperature() = 0;
 
     // accumulate a reading - overridden in some drivers
@@ -97,7 +99,7 @@ protected:
     uint32_t                            _last_update; // in ms
     uint8_t                             _pressure_samples;
 
-private:
+//private: //allow to redefine implementation of get_altitude() underwater in MS5803
     AP_Float                            _ground_temperature;
     AP_Float                            _ground_pressure;
     AP_Int8                             _alt_offset;

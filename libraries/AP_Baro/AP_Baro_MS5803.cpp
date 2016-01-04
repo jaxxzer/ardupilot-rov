@@ -487,17 +487,52 @@ void AP_Baro_MS5803::_calculate()
     }
 
     P = (D1*SENS/2097152 - OFF)/32768;
-    Temp = (TEMP + 2000) * 0.01f;
-    Press = P;
+    Temp = (TEMP + 2000) * 0.01f;//2473.0 = 24.73 degrees c = degrees C *100
+    Press = P;//1000009.0 = 100000.9mbar = mbar*10
 }
 
 float AP_Baro_MS5803::get_pressure()
 {
-    return Press; //In mbar
+    return Press; //In mbar*10
 }
 
 float AP_Baro_MS5803::get_temperature()
 {
     // temperature in degrees C units
     return Temp;// in degreeC*100
+}
+
+float AP_Baro_MS5803::get_altitude(void)
+{
+    if (_ground_pressure == 0) {
+        // called before initialisation
+        return 0;
+    }
+
+    if (_last_altitude_t == _last_update) {
+        // no new information
+        return _altitude + _alt_offset;
+    }
+
+    float pressure = get_pressure();
+    //float alt = get_altitude_difference(_ground_pressure, pressure);
+
+    float alt = (pressure - _ground_pressure) / 10052.0f; //101325Pa is sea level air pressure, 10052 Pascal/ m depth in water. No temperature or depth compensation for density of water.
+
+    // record that we have consumed latest data
+    _last_altitude_t = _last_update;
+
+    // sanity check altitude
+    if (isnan(alt) || isinf(alt)) {
+        _flags.alt_ok = false;
+    } else {
+        _altitude = alt;
+        _flags.alt_ok = true;
+    }
+
+    // ensure the climb rate filter is updated
+    _climb_rate_filter.update(_altitude, _last_update);
+
+    return _altitude + _alt_offset;
+    //return alt;//    10052Pa/m depth.
 }
