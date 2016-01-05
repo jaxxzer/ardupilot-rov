@@ -48,7 +48,8 @@ static void althold_run()
     target_climb_rate = get_pilot_desired_climb_rate(g.rc_3.control_in);
 
     // check for pilot requested take-off
-    if (ap.land_complete && target_climb_rate > 0) {
+//    if (ap.land_complete && target_climb_rate > 0) {
+    if (ap.land_complete && target_climb_rate < 0) {
         // indicate we are taking off
         set_land_complete(false);
         // clear i term when we're taking off

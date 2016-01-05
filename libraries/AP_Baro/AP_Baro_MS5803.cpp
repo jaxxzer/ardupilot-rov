@@ -493,7 +493,7 @@ void AP_Baro_MS5803::_calculate()
 
 float AP_Baro_MS5803::get_pressure()
 {
-    return Press; //In mbar*10
+    return Press*10; //In mbar*10
 }
 
 float AP_Baro_MS5803::get_temperature()
@@ -533,6 +533,6 @@ float AP_Baro_MS5803::get_altitude(void)
     // ensure the climb rate filter is updated
     _climb_rate_filter.update(_altitude, _last_update);
 
-    return _altitude + _alt_offset;
+    return (_altitude + _alt_offset);//multiply by 10 here because the ms5803 reports to .1 mbar and ms5611 reports to .01 mbar
     //return alt;//    10052Pa/m depth.
 }

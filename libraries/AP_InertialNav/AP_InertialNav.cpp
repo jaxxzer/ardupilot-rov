@@ -301,7 +301,10 @@ void AP_InertialNav::check_baro()
     if( baro_update_time != _baro_last_update ) {
         const float dt = (float)(baro_update_time - _baro_last_update) * 0.001f; // in seconds
         // call correction method
+        ////////!!!!!!!!!!!!!!!!!!!!!!!!///////
         correct_with_baro(_baro.get_altitude()*100.0f, dt);
+//        correct_with_baro(_baro.get_altitude()*10.0f, dt);
+        //////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!/////////
         _baro_last_update = baro_update_time;
     }
 }

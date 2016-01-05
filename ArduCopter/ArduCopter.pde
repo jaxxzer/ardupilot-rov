@@ -164,8 +164,10 @@
 #include "config.h"
 #include "config_channels.h"
 
+//////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1//////////////////////////////////////////////////////////////////
 // key aircraft parameters passed to multiple libraries
 static AP_Vehicle::MultiCopter aparm;
+ //////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1//////////////////////////////////////////////////////////////////
 
 // Local modules
 #include "Parameters.h"

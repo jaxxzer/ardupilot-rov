@@ -18,8 +18,8 @@ static bool land_init(bool ignore_checks)
     }
 
     // initialize vertical speeds and leash lengths
-    pos_control.set_speed_z(wp_nav.get_speed_down(), wp_nav.get_speed_up());
-    pos_control.set_accel_z(wp_nav.get_accel_z());
+    pos_control.set_speed_z(wp_nav.get_speed_down(), wp_nav.get_speed_up());//should be ok for rov
+    pos_control.set_accel_z(wp_nav.get_accel_z());//should be ok for rov
 
     // initialise altitude target to stopping point
     pos_control.set_target_to_stopping_point_z();
@@ -127,6 +127,8 @@ static void land_nogps_run()
         attitude_control.relax_bf_rate_controller();
         attitude_control.set_yaw_target_to_current_heading();
         attitude_control.set_throttle_out(0, false);
+        //attitude_control.set_throttle_out(1500, false);//1500 for rov
+
 #if LAND_REQUIRE_MIN_THROTTLE_TO_DISARM == ENABLED
         // disarm when the landing detector says we've landed and throttle is at minimum
         if (ap.land_complete && (ap.throttle_zero || failsafe.radio)) {
@@ -183,10 +185,13 @@ static float get_throttle_land()
     bool sonar_ok = false;
 #endif
     // if we are above 10m and the sonar does not sense anything perform regular alt hold descent
-    if (current_loc.alt >= LAND_START_ALT && !(sonar_ok && sonar_alt_health >= SONAR_ALT_HEALTH_MAX)) {
-        return pos_control.get_speed_down();
+//    if (current_loc.alt >= LAND_START_ALT && !(sonar_ok && sonar_alt_health >= SONAR_ALT_HEALTH_MAX)) {
+    if (current_loc.alt <= LAND_START_ALT) {// we wont be using sonar to surface
+//        return pos_control.get_speed_down();
+        return pos_control.get_speed_up();// POSCONTROL_SPEED_UP defined in AC_PosControl.h, = 250.0f in cm/s
     }else{
-        return -abs(g.land_speed);
+        //return -abs(g.land_speed);
+    	return abs(g.land_speed);//We are moving up to surface!!, so positive throttle, LAND_SPEED defined in config.h, = 50.0f in cm/s
     }
 }
 

@@ -549,15 +549,15 @@ bool GCS_MAVLINK::try_send_message(enum ap_message id)
 
     case MSG_RAW_IMU2:
         CHECK_PAYLOAD_SIZE(SCALED_PRESSURE);
+//        gcs[chan-MAVLINK_COMM_0].send_scaled_pressure(barometer);
         gcs[chan-MAVLINK_COMM_0].send_scaled_pressure(barometer);
-//        gcs[chan-MAVLINK_COMM_0].send_scaled_pressure(internal_barometer);
 
         break;
 
     case MSG_RAW_IMU3:
         CHECK_PAYLOAD_SIZE(SENSOR_OFFSETS);
+//        gcs[chan-MAVLINK_COMM_0].send_sensor_offsets(ins, compass, barometer);
         gcs[chan-MAVLINK_COMM_0].send_sensor_offsets(ins, compass, barometer);
-        //gcs[chan-MAVLINK_COMM_0].send_sensor_offsets(ins, compass, internal_barometer);
         break;
 
     case MSG_CURRENT_WAYPOINT:

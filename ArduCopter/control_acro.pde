@@ -23,6 +23,7 @@ static void acro_run()
         attitude_control.relax_bf_rate_controller();
         attitude_control.set_yaw_target_to_current_heading();
         attitude_control.set_throttle_out(0, false);
+        //attitude_control.set_throttle_out(1500, false);
         return;
     }
 
