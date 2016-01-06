@@ -489,7 +489,7 @@
  # define LAND_SPEED    50          // the descent speed for the final stage of landing in cm/s
 #endif
 #ifndef LAND_START_ALT
- # define LAND_START_ALT 1000         // altitude in cm where land controller switches to slow rate of descent
+ # define LAND_START_ALT 50         // altitude in cm where land controller switches to slow rate of descent
 #endif
 #ifndef LAND_DETECTOR_TRIGGER
  # define LAND_DETECTOR_TRIGGER 50    // number of 50hz iterations with near zero climb rate and low throttle that triggers landing complete.
@@ -510,7 +510,8 @@
  # define LAND_DETECTOR_ROTATION_MAX    0.50f   // vehicle rotation must be below 0.5 rad/sec (=30deg/sec for) vehicle to consider itself landed
 #endif
 #ifndef LAND_REQUIRE_MIN_THROTTLE_TO_DISARM // require pilot to reduce throttle to minimum before vehicle will disarm
- # define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM ENABLED
+// # define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM ENABLED
+ # define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM DISABLED
 #endif
 #ifndef LAND_REPOSITION_DEFAULT
  # define LAND_REPOSITION_DEFAULT   1   // by default the pilot can override roll/pitch during landing

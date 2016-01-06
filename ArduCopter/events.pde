@@ -318,12 +318,55 @@ static void failsafe_gcs_check()
 
 */
 }
+static void failsafe_breach_check() {
+	float last_pressure;
 
+	float pressure_failsafe_threshold = 50.0f;
+	float current_pressure = barometer.get_pressure();
+
+
+	if(failsafe.breach && ap.land_complete && !motors.armed()) {
+		if(current_pressure < barometer.get_pressure() + pressure_failsafe_threshold) {
+			set_failsafe_breach(false);
+			set_mode(STABILIZE);
+			return;
+		}
+	}
+
+    // do nothing if breach failsafe already triggered or motors disarmed
+    if( failsafe.breach || !motors.armed()) {
+        return;
+    }
+
+
+
+
+
+	if(current_pressure > barometer.get_ground_pressure() + pressure_failsafe_threshold) {
+		set_failsafe_breach(true);
+		set_mode(LAND);
+		return;
+
+	}
+
+	//last_pressure =
+}
 // failsafe_gcs_off_event - actions to take when GCS contact is restored
 static void failsafe_gcs_off_event(void)
 {
     // log recovery of GCS in logs?
     Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_GCS, ERROR_CODE_FAILSAFE_RESOLVED);
+}
+
+//static void failsafe_breach_on_event(void) {
+//	//surface, mode land
+//	set_mode(LAND);
+//	//set_mode_land_with_pause();//to delay 4 seconds before final ascent, we dont want to do this we want to get out of water asap.
+//
+//}
+
+static void failsafe_breach_off_event(void) {
+	//disarm motors?
 }
 
 static void update_events()

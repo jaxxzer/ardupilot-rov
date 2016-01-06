@@ -25,32 +25,34 @@ void userhook_50Hz()
 #ifdef USERHOOK_MEDIUMLOOP
 void userhook_MediumLoop()
 {
-	static uint16_t counter_delay;
+//	static uint16_t counter_delay;
+//
+//	static float last_pressure;
+//	static uint16_t counter;
+//
+//	//init_arm_motors();
+//    // put your 10Hz code here
+//	if(counter_delay < 300) {
+//		counter_delay++;
+//	}
+//	else {
+//		float current_pressure = internal_barometer.get_pressure();
+//
+//		if(current_pressure < last_pressure + 1000 && current_pressure > last_pressure - 1000)
+//			counter++;
+//		if(counter > 100) {
+//
+//			if(motors.armed()) {
+//				init_disarm_motors();
+//			} else {
+//				init_arm_motors();
+//			}
+//			counter = 0;
+//	//		init_arm_motors();
+//		}
+//		last_pressure = current_pressure;
+//	}
 
-	static float last_pressure;
-	static uint16_t counter;
-
-	//init_arm_motors();
-    // put your 10Hz code here
-	if(counter_delay < 300) {
-		counter_delay++;
-	}
-	else {
-		float current_pressure = internal_barometer.get_pressure();
-
-		if(current_pressure < last_pressure + 1000 && current_pressure > last_pressure - 1000)
-			counter++;
-		if(counter > 100) {
-
-			if(motors.armed()) {
-				init_disarm_motors();
-			} else {
-				init_arm_motors();
-			}
-	//		init_arm_motors();
-		}
-		last_pressure = current_pressure;
-	}
 
 }
 #endif

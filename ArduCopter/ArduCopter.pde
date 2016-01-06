@@ -420,6 +420,7 @@ static struct {
     uint8_t gps                 : 1; // 3   // A status flag for the gps failsafe
     uint8_t gcs                 : 1; // 4   // A status flag for the ground station failsafe
     uint8_t ekf                 : 1; // 5   // true if ekf failsafe has occurred
+    uint8_t breach				: 1; // 6   // A status flag for the internal pressure failsafe
 
     int8_t radio_counter;                  // number of iterations with throttle below throttle_fs_value
 
@@ -1139,6 +1140,7 @@ static void three_hz_loop()
 {
     // check if we've lost contact with the ground station
     failsafe_gcs_check();
+    failsafe_breach_check();
 
 #if AC_FENCE == ENABLED
     // check if we have breached a fence

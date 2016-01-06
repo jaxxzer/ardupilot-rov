@@ -69,6 +69,10 @@ static void set_failsafe_radio(bool b)
     }
 }
 
+static void set_failsafe_breach(bool b) {
+	failsafe.breach = b; // true to enter failsafe
+	AP_Notify::flags.failsafe_breach = b;
+}
 
 // ---------------------------------------------
 void set_failsafe_battery(bool b)

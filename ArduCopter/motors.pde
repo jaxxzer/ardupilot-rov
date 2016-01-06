@@ -170,7 +170,7 @@ static bool init_arm_motors()
     }
 
     // fast baro calibration to reset ground pressure
-    init_barometer(false);
+    //init_barometer(false);// dont recalibrate baros on rov, because we might arm/disarm at some point after descent, we dont want to reset our depth at that point.
 
     // reset inertial nav alt to zero
     inertial_nav.set_altitude(0.0f);
