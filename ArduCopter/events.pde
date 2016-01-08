@@ -320,17 +320,27 @@ static void failsafe_gcs_check()
 }
 static void failsafe_breach_check() {
 	float last_pressure;
+	float failsafe_pressure;
 
-	float pressure_failsafe_threshold = 50.0f;
+
+	float k = barometer.get_ground_pressure()/barometer.get_ground_temperature();
+	float pressure_failsafe_activate_threshold = 50.0f;// mbar/100
+	float pressure_failsafe_deactivate_threshold = 25.0f;// mbar/100
 	float current_pressure = barometer.get_pressure();
 
+//	if(failsafe.breach) {
+//		if(current_pressure < barometer.get_ground_pressure() + pressure_failsafe_deactivate_threshold) {
+//			failsafe_breach_recover_event();
+//		}
+//	}
 
-	if(failsafe.breach && ap.land_complete && !motors.armed()) {
-		if(current_pressure < barometer.get_pressure() + pressure_failsafe_threshold) {
-			set_failsafe_breach(false);
-			set_mode(STABILIZE);
-			return;
-		}
+//can combine these two into one decision
+	if(failsafe.breach && ap.land_complete) {// does land_complete get reinitialized to false, otherwise below may never be reached
+		//set_failsafe_breach(false);
+		set_mode(STABILIZE);
+		//Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_BREACH, ERROR_CODE_FAILSAFE_RESOLVED);
+		return;
+
 	}
 
     // do nothing if breach failsafe already triggered or motors disarmed
@@ -342,15 +352,24 @@ static void failsafe_breach_check() {
 
 
 
-	if(current_pressure > barometer.get_ground_pressure() + pressure_failsafe_threshold) {
+	if(current_pressure > barometer.get_ground_pressure() + pressure_failsafe_activate_threshold) {
 		set_failsafe_breach(true);
 		set_mode(LAND);
+		Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_BREACH, ERROR_CODE_FAILSAFE_OCCURRED);
 		return;
 
 	}
 
 	//last_pressure =
 }
+
+// ToDo: check here and above case if we need to reset anything for the land
+// (surface) controller to be called again
+//static void failsafe_breach_recover_event() {
+//	set_failsafe_breach(false);
+//	set_mode(STABILIZE);
+//	Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_BREACH, ERROR_CODE_FAILSAFE_RESOLVED);
+//}
 // failsafe_gcs_off_event - actions to take when GCS contact is restored
 static void failsafe_gcs_off_event(void)
 {
@@ -365,9 +384,9 @@ static void failsafe_gcs_off_event(void)
 //
 //}
 
-static void failsafe_breach_off_event(void) {
-	//disarm motors?
-}
+//static void failsafe_breach_off_event(void) {
+//	//disarm motors?
+//}
 
 static void update_events()
 {

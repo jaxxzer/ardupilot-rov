@@ -50,6 +50,8 @@ static void land_gps_run()
     int16_t roll_control = 0, pitch_control = 0;
     float target_yaw_rate = 0;
 
+//    land complete might always be true after first land.
+//	once land is complete if motors are armed agian and the failsafe enters land will already be complete
     // if not auto armed or landed set throttle to zero and exit immediately
     if(!ap.auto_armed || ap.land_complete) {
         attitude_control.relax_bf_rate_controller();

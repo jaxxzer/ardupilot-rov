@@ -203,8 +203,9 @@ static void set_throttle_zero_flag(int16_t throttle_control)
     uint32_t tnow_ms = millis();
 
     // if non-zero throttle immediately set as non-zero
-    if (throttle_control > 0) {
-        last_nonzero_throttle_ms = tnow_ms;
+    //if (throttle_control > 0) { //may need to change this for rov, throttle_control is range 0 ~1000
+    if (throttle_control > 525 || throttle_control < 475) {
+    	last_nonzero_throttle_ms = tnow_ms;
         ap.throttle_zero = false;
     } else if (tnow_ms - last_nonzero_throttle_ms > THROTTLE_ZERO_DEBOUNCE_TIME_MS) {
         ap.throttle_zero = true;

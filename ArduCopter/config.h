@@ -510,8 +510,8 @@
  # define LAND_DETECTOR_ROTATION_MAX    0.50f   // vehicle rotation must be below 0.5 rad/sec (=30deg/sec for) vehicle to consider itself landed
 #endif
 #ifndef LAND_REQUIRE_MIN_THROTTLE_TO_DISARM // require pilot to reduce throttle to minimum before vehicle will disarm
-// # define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM ENABLED
- # define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM DISABLED
+ # define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM ENABLED
+// # define LAND_REQUIRE_MIN_THROTTLE_TO_DISARM DISABLED
 #endif
 #ifndef LAND_REPOSITION_DEFAULT
  # define LAND_REPOSITION_DEFAULT   1   // by default the pilot can override roll/pitch during landing

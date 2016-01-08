@@ -39,8 +39,13 @@ static void update_land_detector()
 //    }
 //
 //    // set land maybe flag
-//    set_land_complete_maybe(land_detector >= LAND_DETECTOR_MAYBE_TRIGGER);
-	if(barometer.get_pressure() < barometer.get_ground_pressure() + 100.0f)
+	//50Hz call
+//    set_land_complete_maybe(land_detector >= LAND_DETECTOR_MAYBE_TRIGGER)
+
+#ifndef SURFACE_END_DEPTH
+#define SURFACE_END_DEPTH 500.0f //depth at which we exit the surface maneuver and disarm the motors
+#endif
+	if(barometer.get_pressure() < barometer.get_ground_pressure() + SURFACE_END_DEPTH)//~5cm here arbitrary number, calculate this, match to something reasonable in events.pde
 		set_land_complete(true);
 	else
 		set_land_complete(false);

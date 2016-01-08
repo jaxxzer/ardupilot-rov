@@ -50,7 +50,7 @@ static void althold_run()
     // check for pilot requested take-off
 //    if (ap.land_complete && target_climb_rate > 0) {
     if (ap.land_complete && target_climb_rate < 0) {
-        // indicate we are taking off
+    	// indicate we are taking off
         set_land_complete(false);
         // clear i term when we're taking off
         set_throttle_takeoff();
