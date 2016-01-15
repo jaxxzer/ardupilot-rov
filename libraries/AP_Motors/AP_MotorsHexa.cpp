@@ -29,12 +29,12 @@ void AP_MotorsHexa::setup_motors()
     AP_MotorsMatrix::setup_motors();
     float
 		//Front left downward facing
-		MOT_1_ROLL_FACTOR = -0.5,
+		MOT_1_ROLL_FACTOR = 0.5,
 		MOT_1_PITCH_FACTOR = 0.5,
 		MOT_1_YAW_FACTOR = 0,
 
 		//Front right downward facing
-		MOT_2_ROLL_FACTOR = 0.5,
+		MOT_2_ROLL_FACTOR = -0.5,
 		MOT_2_PITCH_FACTOR = 0.5,
 		MOT_2_YAW_FACTOR = 0,
 
@@ -54,7 +54,7 @@ void AP_MotorsHexa::setup_motors()
 		MOT_5_YAW_FACTOR = 0.0,
 
 		//Bottom motor facing left
-		MOT_6_ROLL_FACTOR = 0.25,
+		MOT_6_ROLL_FACTOR = -0.25,
 		MOT_6_PITCH_FACTOR = 0.0,
 		MOT_6_YAW_FACTOR = 0.0;
 

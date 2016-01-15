@@ -905,7 +905,7 @@ void GCS_MAVLINK::handleMessage(mavlink_message_t* msg)
             }
        }
 
-    	if (packet.base_mode >= 0 && packet.base_mode <=3) {
+    	if (packet.base_mode >= 0) {
     		if(set_mode(packet.base_mode)) {
     				result = MAV_RESULT_ACCEPTED;
     		}

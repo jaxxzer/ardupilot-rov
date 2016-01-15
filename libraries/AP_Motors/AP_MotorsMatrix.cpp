@@ -324,14 +324,14 @@ void AP_MotorsMatrix::output_armed()
         }
 
 
-
+        //gcs_send_text_fmt(PSTR("Radio-out = %d"), _rc_throttle.radio_out);
         //Add pilot inputs
         //dirty, but may work underwater...
-        motor_out[0] += _rc_throttle.radio_in;
-    	motor_out[1] += _rc_throttle.radio_in;
+        motor_out[0] += _rc_throttle.radio_out;
+    	motor_out[1] += _rc_throttle.radio_out;
     	motor_out[2] += _rc_thrust.radio_in;
     	motor_out[3] += _rc_thrust.radio_in;
-    	motor_out[4] += _rc_throttle.radio_in;
+    	motor_out[4] += _rc_throttle.radio_out;
     	motor_out[5] += _rc_strafe.radio_in;
 /*
         // adjust for throttle curve

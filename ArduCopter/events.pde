@@ -323,10 +323,10 @@ static void failsafe_breach_check() {
 	float failsafe_pressure;
 
 
-	float k = barometer.get_ground_pressure()/barometer.get_ground_temperature();
-	float pressure_failsafe_activate_threshold = 50.0f;// mbar/100
+	float k = internal_barometer.get_ground_pressure()/internal_barometer.get_ground_temperature();
+	float pressure_failsafe_activate_threshold = 200.0f;// mbar/100
 	float pressure_failsafe_deactivate_threshold = 25.0f;// mbar/100
-	float current_pressure = barometer.get_pressure();
+	float current_pressure = internal_barometer.get_pressure();
 
 //	if(failsafe.breach) {
 //		if(current_pressure < barometer.get_ground_pressure() + pressure_failsafe_deactivate_threshold) {
@@ -337,7 +337,8 @@ static void failsafe_breach_check() {
 //can combine these two into one decision
 	if(failsafe.breach && ap.land_complete) {// does land_complete get reinitialized to false, otherwise below may never be reached
 		//set_failsafe_breach(false);
-		set_mode(STABILIZE);
+
+		//set_mode(STABILIZE);
 		//Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_BREACH, ERROR_CODE_FAILSAFE_RESOLVED);
 		return;
 
@@ -352,13 +353,13 @@ static void failsafe_breach_check() {
 
 
 
-	if(current_pressure > barometer.get_ground_pressure() + pressure_failsafe_activate_threshold) {
-		set_failsafe_breach(true);
-		set_mode(LAND);
-		Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_BREACH, ERROR_CODE_FAILSAFE_OCCURRED);
-		return;
-
-	}
+//	if(current_pressure > internal_barometer.get_ground_pressure() + pressure_failsafe_activate_threshold) {
+//		set_failsafe_breach(true);
+//		set_mode(LAND);
+//		Log_Write_Error(ERROR_SUBSYSTEM_FAILSAFE_BREACH, ERROR_CODE_FAILSAFE_OCCURRED);
+//		return;
+//
+//	}
 
 	//last_pressure =
 }

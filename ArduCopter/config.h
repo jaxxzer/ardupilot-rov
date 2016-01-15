@@ -489,7 +489,7 @@
  # define LAND_SPEED    50          // the descent speed for the final stage of landing in cm/s
 #endif
 #ifndef LAND_START_ALT
- # define LAND_START_ALT 50         // altitude in cm where land controller switches to slow rate of descent
+ # define LAND_START_ALT -15         // altitude in cm where land controller switches to slow rate of descent
 #endif
 #ifndef LAND_DETECTOR_TRIGGER
  # define LAND_DETECTOR_TRIGGER 50    // number of 50hz iterations with near zero climb rate and low throttle that triggers landing complete.

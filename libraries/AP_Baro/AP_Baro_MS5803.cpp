@@ -517,7 +517,7 @@ float AP_Baro_MS5803::get_altitude(void)
     float pressure = get_pressure();
     //float alt = get_altitude_difference(_ground_pressure, pressure);
 
-    float alt = (pressure - _ground_pressure) / 10052.0f; //101325Pa is sea level air pressure, 10052 Pascal/ m depth in water. No temperature or depth compensation for density of water.
+    float alt = (_ground_pressure - pressure) / 10052.0f; //101325Pa is sea level air pressure, 10052 Pascal/ m depth in water. No temperature or depth compensation for density of water.
 
     // record that we have consumed latest data
     _last_altitude_t = _last_update;

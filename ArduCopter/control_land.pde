@@ -111,6 +111,7 @@ static void land_gps_run()
         cmb_rate = get_throttle_land();
     }
 
+
     // update altitude target and call position controller
     pos_control.set_alt_target_from_climb_rate(cmb_rate, G_Dt, true);
     pos_control.update_z_controller();
@@ -140,6 +141,7 @@ static void land_nogps_run()
         // disarm when the landing detector says we've landed
         if (ap.land_complete) {
             init_disarm_motors();
+            //gcs_send_text_fmt(PSTR("Land complete...."));
         }
 #endif
         return;
@@ -170,7 +172,7 @@ static void land_nogps_run()
         land_pause = false;
         cmb_rate = get_throttle_land();
     }
-
+    //gcs_send_text_fmt(PSTR("cmb_rate = %f"), cmb_rate);
     // call position controller
     pos_control.set_alt_target_from_climb_rate(cmb_rate, G_Dt, true);
     pos_control.update_z_controller();
@@ -186,15 +188,20 @@ static float get_throttle_land()
 #else
     bool sonar_ok = false;
 #endif
+
+    //gcs_send_text_fmt(PSTR("speed_up = %f"), pos_control.get_speed_up());
+
     // if we are above 10m and the sonar does not sense anything perform regular alt hold descent
 //    if (current_loc.alt >= LAND_START_ALT && !(sonar_ok && sonar_alt_health >= SONAR_ALT_HEALTH_MAX)) {
-    if (current_loc.alt <= LAND_START_ALT) {// we wont be using sonar to surface
-//        return pos_control.get_speed_down();
+    if (current_loc.alt <= LAND_START_ALT) {// we wont be using sonar to surface LAND_START_ALT= -50cm in config.h
+//        return pos_control.get_speed_down(); = -150.0
         return pos_control.get_speed_up();// POSCONTROL_SPEED_UP defined in AC_PosControl.h, = 250.0f in cm/s
     }else{
-        //return -abs(g.land_speed);
-    	return abs(g.land_speed);//We are moving up to surface!!, so positive throttle, LAND_SPEED defined in config.h, = 50.0f in cm/s
+    	//return 50.0f;
+        return abs(g.land_speed);
+    	//return -abs(g.land_speed);//We are moving up to surface!!, so positive throttle, LAND_SPEED defined in config.h, = 50.0f in cm/s
     }
+
 }
 
 // land_do_not_use_GPS - forces land-mode to not use the GPS but instead rely on pilot input for roll and pitch
